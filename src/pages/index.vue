@@ -41,20 +41,58 @@
 
 <script>
 export default {
-  name: 'IndexPage',
+  name: 'NewsIndexPage',
   // データをWPから取得し、ページコンポーネントへ直接セットする
   async asyncData (context) {
     // WP REST APIのベースURL
     const baseUrl = context.$config.wpBaseUrl
-    // お知らせの記事を3件取得するためのエンドポイント作成
-    const newsUrl = baseUrl + 'posts?_embed&per_page=3&categories=2'
+    // お知らせの記事を10件取得するためのエンドポイント作成
+    const newsUrl = baseUrl + 'posts?_embed&per_page=10&categories=2'
 
     // 記事を取得
     const posts = await context.$axios.$get(newsUrl)
     // <template></template>で使えるようにする
+
     // posts: posts
     return {
       posts
+    }
+  },
+  head () {
+    return {
+      title: 'お知らせ',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'お知らせのdescription'
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: 'お知らせのdescription'
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: 'https://placehold.jp/1200x630.png'
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: 'https://sample-corp.com/news/'
+        },
+        {
+          hid: 'og:type',
+          property: 'og:type',
+          content: 'website'
+        },
+        {
+          hid: 'twitter:card',
+          property: 'twitter:card',
+          content: 'summary'
+        }
+      ]
     }
   }
 }
